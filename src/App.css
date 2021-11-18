@@ -1,0 +1,17 @@
+.parent {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  background-color: red;
+}
+
+.child {
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  position: absolute;
+  transform: translate(10px, 10px);
+}
