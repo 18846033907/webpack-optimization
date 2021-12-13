@@ -6,6 +6,7 @@ import "./App.css";
 // import Index from './cloneElement'
 // import Index from './createContext'
 // import Index from './hooks'
+import Index from './hoc'
 // import {cube} from './math'
 // import Index from './effects'
 // import Index from './callback'
