@@ -8,6 +8,11 @@ import "./App.css";
 // import Index from './hooks'
 import Index from './hoc'
 // import {cube} from './math'
+// import Index from './effects'
+// import Index from './callback'
+// import Index from './reducer'
+import Index from './class'
+// import Index from './context'
 // main.js
 // import funcA from "./example1";
 // import { funcG, funcH } from "./example4";
@@ -17,7 +22,6 @@ import Index from './hoc'
 // });
 
 const App = () => {
-  // funcB();
   return (
     <div>
       <Index />
