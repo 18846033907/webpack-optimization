@@ -74,9 +74,9 @@ module.exports = {
         removeComments: true,
       },
     }),
-    new webpack.ProvidePlugin({
-      React: "react",
-    }),
+    // new webpack.ProvidePlugin({
+    //   React: "react",
+    // }),
     new CopyPlugin({
       patterns: [{ from: "assets", to: "assets" }],
     }),

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 
 // const renderQueue = [];
 // let isFirstrender = false;
@@ -62,30 +62,30 @@ import { useState, useEffect } from "react";
 //   );
 // };
 
-export default class Index extends React.Component {
-  state = {
-    cnt: 0,
-  };
-  render() {
-    console.log("render");
-    return (
-      <>
-        <button
-          onClick={() => {
-            setTimeout(() => {
-              this.setState({ cnt: this.state.cnt + 1 });
-              console.log(this.state.cnt);
-              this.setState({ cnt: this.state.cnt + 1 });
-            }, 1000);
-          }}
-        >
-          add cnt
-        </button>
-        <div>cnt: {this.state.cnt}</div>
-      </>
-    );
-  }
-}
+// export default class Index extends Component {
+//   state = {
+//     cnt: 0,
+//   };
+//   render() {
+//     console.log("render");
+//     return (
+//       <>
+//         <button
+//           onClick={() => {
+//             setTimeout(() => {
+//               this.setState({ cnt: this.state.cnt + 1 });
+//               console.log(this.state.cnt);
+//               this.setState({ cnt: this.state.cnt + 1 });
+//             }, 1000);
+//           }}
+//         >
+//           add cnt
+//         </button>
+//         <div>cnt: {this.state.cnt}</div>
+//       </>
+//     );
+//   }
+// }
 
 // export default function Index() {
 //   const [cnt, setCnt] = useState(0);
@@ -107,5 +107,32 @@ export default class Index extends React.Component {
 //     </>
 //   );
 // }
+
+function A(WrapperComponent) {
+  return function (props) {
+    const shraredLogic = () => {
+      return "kkk";
+    };
+    const sharedVar = shraredLogic();
+    return <WrapperComponent {...props} sharedVar={sharedVar} />;
+  };
+}
+function B(props) {
+  return <div>hi,{props.sharedVar}</div>;
+}
+function C(props) {
+  return <div style={{color:'red'}}>hello,{props.sharedVar}</div>;
+}
+const WrapperB = A(B);
+const WrapperC = A(C);
+
+export default function Index() {
+  return (
+    <div>
+      <WrapperB  style={{color:'red'}}/>
+      <WrapperC />
+    </div>
+  );
+}
 
 //useState:setCnt(cnt + 1)这种形式，一次执行多少个都是取得当前值;setCnt(cnt=>cnt + 1),这种形式，依次执行
