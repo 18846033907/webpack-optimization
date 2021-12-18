@@ -6,7 +6,7 @@ import "./App.css";
 // import Index from './cloneElement'
 // import Index from './createContext'
 // import Index from './hooks'
-import Index from "./hoc";
+// import Index from "./hoc";
 // import {cube} from './math'
 // import Index from './effects'
 // import Index from './callback'
@@ -34,8 +34,15 @@ function B(props) {
 function C(props) {
   return <div>C:{props.val}</div>;
 }
+const Index=()=>{
+  return <div>A
+    <div>B1</div>
+    <div>B2</div>
+  </div>
+}
 
 const App = () => {
+  console.log(<Index/>)
   return (
     <div>
       {/* <A
