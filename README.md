@@ -1,13 +1,18 @@
 # webpack-optimization
+
 ## webpack
+
 ### webpack 工作流程
+
 参数解析：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数
-找到入口文件：从 Entry 里配置的 Module 开始递归解析 Entry 依赖的所有 Module调用 
+找到入口文件：从 Entry 里配置的 Module 开始递归解析 Entry 依赖的所有 Module 调用
 Loader 编译文件：每找到一个 Module， 就会根据配置的 Loader 去找出对应的转换规则
 遍历 AST，收集依赖：对 Module 进行转换后，再解析出当前 Module 依赖的 Module
 生成 Chunk：这些模块会以 Entry 为单位进行分组，一个 Entry 和其所有依赖的 Module 被分到一个组也就是一个 Chunk
 输出文件：最后 Webpack 会把所有 Chunk 转换成文件输出
+
 ### loader
+
 webpack.config.js 里配置了一个 模块 的 Loader；
 遇到 相应模块 文件时，触发了 该模块的 loader;
 loader 接受了一个表示该 模块 文件内容的 source;
@@ -17,7 +22,7 @@ loader 使用 webapck 提供的一系列 api 对 source 进行转换，得到一
 ### plugins
 
 插件就像是一个插入到生产线中的一个功能，在特定的时机对生产线上的资源做处理。
-webpack 通过 Tapable 来组织这条复杂的生产线。 
+webpack 通过 Tapable 来组织这条复杂的生产线。
 webpack 在编译过代码程中，会触发一系列 Tapable 钩子事件，插件所做的，就是找到相应的钩子，往上面挂上自己的任务，也就是注册事件，
 这样，当 webpack 构建的时候，插件注册的事件就会随着钩子的触发而执行了。
 webpack 插件由以下组成：
@@ -28,14 +33,13 @@ webpack 插件由以下组成：
 处理 webpack 内部实例的特定数据。
 功能完成后调用 webpack 提供的回调
 
-
 ## ES6
 
 ## React
 
 ### react 变化
 
-使用 JSX 而无需引入 React.编译后文件中引入 import {jsx as \_jsx} from 'react/jsx-runtime',需配置 
+使用 JSX 而无需引入 React.编译后文件中引入 import {jsx as \_jsx} from 'react/jsx-runtime',需配置
 "runtime": "automatic"
 事件绑定从 document 转到根节点
 
@@ -57,23 +61,28 @@ React.memo: 第二个参数 返回 true 组件不渲染 ， 返回 false 组件�
 语法糖,易写,在 JSX 语法中，你可以在大括号内放置任何有效的 JavaScript 表达式。
 React DOM 在渲染所有输入内容之前，默认会进行转义。
 
+### setState
+
 ### 虚拟 DOM
-可以不频繁的操作DOM；
+
+可以不频繁的操作 DOM；
 跨平台；
 
 ### 副作用，清除副作用
-副作用（Side effect）指一个function做了和本身运算返回值无关的事。比如：修改了全局变量、修改了入参、console.log()等等
+
+副作用（Side effect）指一个 function 做了和本身运算返回值无关的事。比如：修改了全局变量、修改了入参、console.log()等等
 无需清除的 effect,在 React 更新 DOM 之后运行一些额外的代码;
-需要清除的effect，会引起内存泄漏的代码，比如订阅外部模块，监听事件，定时器
+需要清除的 effect，会引起内存泄漏的代码，比如订阅外部模块，监听事件，定时器
 
 ### 函数组件和类组件
 
 类组件有实例，类组件有 this，类组件书写复杂
 
 ### HOC、Render props、Hooks
-HOC若高阶组件里逻辑太复杂，不好调试
-render props需在组件里添加render属性
-Hooks清晰
+
+HOC 若高阶组件里逻辑太复杂，不好调试
+render props 需在组件里添加 render 属性
+Hooks 清晰
 
 ### 面向对象
 
@@ -82,7 +91,6 @@ Hooks清晰
 ### 组件切换保存状态
 
 redux context 或者父组件保存数据
-
 
 ## 项目问题
 
