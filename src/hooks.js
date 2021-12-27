@@ -1,10 +1,15 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 function Index() {
   const [a, setA] = useState(1);
   const [b, setB] = useState("b");
+  const [c, setC] = useState(0);
   console.log("render");
-
+  useEffect(() => {
+    setInterval(() => {
+      setC(c=>c + 1);
+    },1000);
+  }, []);
   function handleClickWithPromise() {
     Promise.resolve().then(() => {
       setA((a) => a + 1);
@@ -19,6 +24,7 @@ function Index() {
 
   return (
     <Fragment>
+      <div>{c}</div>
       <button onClick={handleClickWithPromise}>
         {a}-{b} 异步执行
       </button>

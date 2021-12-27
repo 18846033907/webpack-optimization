@@ -6,13 +6,14 @@ import "./App.css";
 // import Index from './cloneElement'
 // import Index from './createContext'
 // import Index from './hooks'
+import Index from './useDebounce'
 // import Index from "./hoc";
 // import {cube} from './math'
 // import Index from './effects'
 // import Index from './callback'
 // import Index from './reducer'
 // import Index from './class'
-// import Index from './context'
+// import Index from './LoadingButton'
 // main.js
 // import funcA from "./example1";
 // import { funcG, funcH } from "./example4";
@@ -34,15 +35,14 @@ function B(props) {
 function C(props) {
   return <div>C:{props.val}</div>;
 }
-const Index=()=>{
-  return <div>A
-    <div>B1</div>
-    <div>B2</div>
-  </div>
-}
+// const Index=()=>{
+//   return <div>A
+//     <div>B1</div>
+//     <div>B2</div>
+//   </div>
+// }
 
 const App = () => {
-  console.log(<Index/>)
   return (
     <div>
       {/* <A
@@ -55,7 +55,8 @@ const App = () => {
           return <C val={val} />;
         }}
       /> */}
-      <Index />
+      <Index/>
+      {/* <Index onClick={()=>{console.log(22)}}/> */}
       {/* <img src="assets/ii.jpg" />
       <img src="assets/8big.jpg" />
       <div className="parent">
