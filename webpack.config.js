@@ -6,11 +6,13 @@
  * 而我们的代码是放在src，才用的是ES6的模块化
  */
 const { resolve } = require("path");
+const { DllPlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
-const webpack = require("webpack");
+// const webpack = require("webpack");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   // webpack的核心配置
   //入口起点
@@ -77,23 +79,24 @@ module.exports = {
     // new webpack.ProvidePlugin({
     //   React: "react",
     // }),
-    new CopyPlugin({
-      patterns: [{ from: "assets", to: "assets" }],
-    }),
+    // new CopyPlugin({
+    //   patterns: [{ from: "assets", to: "assets" }],
+    // }),
     new MiniCssExtractPlugin({
       filename: "css/bundle.css",
     }),
     new OptimizeCssAssetsWebpackPlugin(),
+    new CleanWebpackPlugin(),
+    new DllPlugin({
+      name: "[name].manifest.json",
+      path: resolve(__dirname, "../dll/[name].manifest.json"),
+    }),
   ],
   devServer: {
     static: "./build",
     compress: true,
     port: 3000,
     open: true,
-  },
-  optimization: {
-    // sideEffects: true,
-    usedExports: true,
   },
   mode: "development",
 };
