@@ -11,9 +11,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const notifier = require("node-notifier");
 // const webpack = require("webpack");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-module.exports = {
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const SpeedMeasureWebpack5Plugin = require("speed-measure-webpack5-plugin");
+const smw = new SpeedMeasureWebpack5Plugin();
+const bootstrap = resolve(
+  __dirname,
+  "node_modules/bootstrap/dist/css/bootstrap.css"
+);
+
+module.exports = smw.wrap({
   // webpack的核心配置
   //入口起点
   entry: "./src/index.js",
@@ -26,6 +37,15 @@ module.exports = {
     clean: true,
   },
   devtool: "inline-source-map",
+  context: process.cwd(),
+  resolve: {
+    extensions: [".js", ".jsx", "json"],
+    alias: { bootstrap },
+    modules: ["c:/node_modules", "node_modules"], //指定查找目录
+  },
+  externals: {
+    jquery: 'jQuery',
+  },
   // loader 配置
   module: {
     rules: [
@@ -40,7 +60,7 @@ module.exports = {
       {
         test: /\.less|css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
           "css-loader",
           // 将less文件编译成css文件
           "postcss-loader",
@@ -69,6 +89,20 @@ module.exports = {
   // 插件配置
   plugins: [
     // 详细的plugins的配置
+    new FriendlyErrorsWebpackPlugin({
+      onErrors: (severity, errors) => {
+        let error = errors[0];
+        notifier.notify({
+          title: "webpack编译失败",
+          message: severity + ":" + error.name,
+          subtitle: error.file || "",
+        });
+      },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "disabled",
+      generateStatsFile: true,
+    }),
     new HtmlWebpackPlugin({
       template: "index.html",
       minify: {
@@ -79,18 +113,17 @@ module.exports = {
     // new webpack.ProvidePlugin({
     //   React: "react",
     // }),
-    // new CopyPlugin({
-    //   patterns: [{ from: "assets", to: "assets" }],
-    // }),
-    new MiniCssExtractPlugin({
-      filename: "css/bundle.css",
+    new CopyPlugin({
+      patterns: [{ from: "assets", to: "assets" }],
     }),
-    new OptimizeCssAssetsWebpackPlugin(),
+    // new MiniCssExtractPlugin(),
+    // new OptimizeCssAssetsWebpackPlugin(),
     new CleanWebpackPlugin(),
-    new DllPlugin({
-      name: "[name].manifest.json",
-      path: resolve(__dirname, "../dll/[name].manifest.json"),
-    }),
+
+    // new DllPlugin({
+    //   name: "[name].manifest.json",
+    //   path: resolve(__dirname, "../dll/[name].manifest.json"),
+    // }),
   ],
   devServer: {
     static: "./build",
@@ -99,4 +132,4 @@ module.exports = {
     open: true,
   },
   mode: "development",
-};
+});

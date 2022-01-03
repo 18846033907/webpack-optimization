@@ -1,4 +1,6 @@
-import "./App.css";
+// import "./App.css";
+import 'bootstrap';
+import $ from 'jquery';
 // import Index from './pureComponent'
 // import Index from './memo';
 // import Index from './forwardRef'
