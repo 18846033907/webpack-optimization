@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import 'bootstrap';
 import $ from 'jquery';
 // import Index from './pureComponent'
@@ -23,6 +23,8 @@ import Index from './useDebounce'
 // import(/* webpackChunkName: "example.3" */ "./example3").then((module) => {
 //   console.log("123");
 // });
+import moment from 'moment'
+
 function A(props) {
   const sharedLogic = () => {
     return "uuu";
@@ -45,6 +47,7 @@ function C(props) {
 // }
 
 const App = () => {
+  console.log(222,$,moment)
   return (
     <div>
       {/* <A
