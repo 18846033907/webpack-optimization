@@ -26,7 +26,9 @@ const bootstrap = resolve(
   "node_modules/bootstrap/dist/css/bootstrap.css"
 );
 
-module.exports = {
+console.log('process.env.NODE_ENV=', process.env.NODE_ENV) // 打印环境变量
+
+const config= {
   // webpack的核心配置
   //入口起点
   entry: "./src/index.js",
@@ -67,6 +69,7 @@ module.exports = {
         oneOf: [
           {
             test: /\.css$/,
+            include:[resolve(__dirname, 'src')],
             use: [
               // "cache-loader",
               // "style-loader",
@@ -79,8 +82,8 @@ module.exports = {
           {
             test: /\.less$/,
             use: [
-              // "style-loader",
-              MiniCssExtractPlugin.loader,
+              "style-loader",
+              // MiniCssExtractPlugin.loader,
               "css-loader",
               // 将less文件编译成css文件
               "postcss-loader",
@@ -154,10 +157,17 @@ module.exports = {
     // }),
   ],
   devServer: {
-    static: "./build",
+    static: "./assets",
     compress: true,
     port: 3000,
     open: true,
   },
   mode: "development",
 };
+
+module.exports = (env, argv) => {
+  console.log('argv.mode=',argv.mode) // 打印 mode(模式) 值
+  // 这里可以通过不同的模式修改 config 配置
+  return config;
+}
+

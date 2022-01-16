@@ -1,6 +1,6 @@
 import "./App.css";
-import 'bootstrap';
-import $ from 'jquery';
+// import 'bootstrap';
+// import $ from 'jquery';
 // import Index from './pureComponent'
 // import Index from './memo';
 // import Index from './forwardRef'
@@ -49,7 +49,9 @@ function C(props) {
 const App = () => {
   console.log(222,$,moment)
   return (
-    <div>
+    <div className="parent">
+      <div className="child"></div>
+      
       {/* <A
         render={(val) => {
           return <B val={val} />;
@@ -60,7 +62,7 @@ const App = () => {
           return <C val={val} />;
         }}
       /> */}
-      <Index/>
+      {/* <Index/> */}
       {/* <Index onClick={()=>{console.log(22)}}/> */}
       {/* <img src="assets/ii.jpg" />
       <img src="assets/8big.jpg" />
