@@ -9,26 +9,26 @@ const { resolve } = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin=require("terser-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const notifier = require("node-notifier");
+// const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+// const notifier = require("node-notifier");
 // const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const SpeedMeasureWebpack5Plugin = require("speed-measure-webpack5-plugin");
-const PurgecssWebpackPlugin=require('purgecss-webpack-plugin')
-const smw = new SpeedMeasureWebpack5Plugin();
+// const BundleAnalyzerPlugin =
+//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+// const SpeedMeasureWebpack5Plugin = require("speed-measure-webpack5-plugin");
+// const PurgecssWebpackPlugin = require("purgecss-webpack-plugin");
+// const smw = new SpeedMeasureWebpack5Plugin();
 const bootstrap = resolve(
   __dirname,
   "node_modules/bootstrap/dist/css/bootstrap.css"
 );
 
-console.log('process.env.NODE_ENV=', process.env.NODE_ENV) // 打印环境变量
+console.log("process.env.NODE_ENV=", process.env.NODE_ENV); // 打印环境变量
 
-const config= {
+const config = {
   // webpack的核心配置
   //入口起点
   entry: "./src/index.js",
@@ -50,8 +50,8 @@ const config= {
   externals: {
     jquery: "jQuery",
   },
-  optimization:{
-    minimizer:[new TerserPlugin()]//压缩js
+  optimization: {
+    minimizer: [new TerserPlugin()], //压缩js
   },
   // loader 配置
   module: {
@@ -69,7 +69,6 @@ const config= {
         oneOf: [
           {
             test: /\.css$/,
-            include:[resolve(__dirname, 'src')],
             use: [
               // "cache-loader",
               // "style-loader",
@@ -82,14 +81,23 @@ const config= {
           {
             test: /\.less$/,
             use: [
-              "style-loader",
-              // MiniCssExtractPlugin.loader,
+              // "style-loader",
+              MiniCssExtractPlugin.loader,
               "css-loader",
               // 将less文件编译成css文件
               "postcss-loader",
               "less-loader",
             ],
           },
+          // {
+          //   test: /\.(s[ac]|c)ss$/i, //匹配所有的 sass/scss/css 文件
+          //   use: [
+          //     'style-loader',
+          //     'css-loader',
+          //     'postcss-loader',
+          //     'sass-loader', 
+          //   ]
+          // },
         ],
       },
 
@@ -97,17 +105,27 @@ const config= {
         test: /\.(jpg|png|gif)$/,
         loader: "url-loader",
         options: {
-          limit: 8 * 1024,
-          esModule: false,
+          limit: 8 * 1024
         },
       },
 
       // 打包其他资源，除了html, js, css资源以外的资源
+      // {
+      //   test: /\.(jpe?g|png|gif)$/i,
+      //   exclude: /\.(css|js|less|html)$/,
+      //   loader: "file-loader",
+      //   options: {
+      //     name: "[hash:10].[ext]",
+      //   },
+      // },
       {
-        exclude: /\.(css|js|less|html)$/,
-        loader: "file-loader",
+        test: /\.(png|jpg|gif)$/i,
+        loader: 'file-loader',
         options: {
-          name: "[hash:10].[ext]",
+          name: '[name].[contenthash].[ext]',
+          outputPath: 'assets/',
+          publicPath: 'assets/',
+          postTransformPublicPath: (p) => `__webpack_public_path__ + ${p}`,
         },
       },
     ],
@@ -117,10 +135,10 @@ const config= {
     // 详细的plugins的配置
     new HtmlWebpackPlugin({
       template: "./index.html",
-      minify:{
-        collapseWhitespace:true,
-        removeComments:true,
-      }
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+      },
     }),
     // new FriendlyErrorsWebpackPlugin({
     //   onErrors: (severity, errors) => {
@@ -143,8 +161,8 @@ const config= {
     // new CopyPlugin({
     //   patterns: [{ from: "assets", to: "assets" }],
     // }),
-    new MiniCssExtractPlugin({filename:'[name].css'}),
-    new OptimizeCssAssetsWebpackPlugin(),//压缩css
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
+    new OptimizeCssAssetsWebpackPlugin(), //压缩css
     new CleanWebpackPlugin(),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
@@ -162,12 +180,10 @@ const config= {
     port: 3000,
     open: true,
   },
-  mode: "development",
 };
 
 module.exports = (env, argv) => {
-  console.log('argv.mode=',argv.mode) // 打印 mode(模式) 值
+  console.log("argv.mode=", argv.mode); // 打印 mode(模式) 值
   // 这里可以通过不同的模式修改 config 配置
   return config;
-}
-
+};

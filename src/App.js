@@ -1,4 +1,7 @@
-import "./App.css";
+import * as S from "./App.css";
+import * as S1 from "./App1.css";
+import logo from '../assets/8big.jpg'
+// import  "./App.css";
 // import 'bootstrap';
 // import $ from 'jquery';
 // import Index from './pureComponent'
@@ -48,10 +51,11 @@ function C(props) {
 
 const App = () => {
   console.log(222,$,moment)
+  console.log(S,S1);
+  console.log(logo)
+ 
   return (
-    <div className="parent">
-      <div className="child"></div>
-      
+    <div > 
       {/* <A
         render={(val) => {
           return <B val={val} />;
@@ -64,11 +68,12 @@ const App = () => {
       /> */}
       {/* <Index/> */}
       {/* <Index onClick={()=>{console.log(22)}}/> */}
-      {/* <img src="assets/ii.jpg" />
-      <img src="assets/8big.jpg" />
+      <img src="./ii.jpg" />
+      <img src="./8big.jpg" />
       <div className="parent">
         <div className="child">哈哈哈</div>
-      </div> */}
+      </div>
+      <div className="imgBox"><img src={logo}/> </div>
     </div>
   );
 };
