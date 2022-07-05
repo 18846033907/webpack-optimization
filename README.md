@@ -110,3 +110,10 @@ redux context 或者父组件保存数据
 1、styled-components 优点，js 编写，可传组件的 props，根据其做不同显示
 2、sass 演变为 scss,sass 写法嵌套，scss 花括号嵌套，易用清晰
 3、babel 先解析 parse 为 AST 语法树，再转变为有依赖关系的 AST 语法树，最后通过插件将 AST 转变为 ES5
+
+### 优化打包速度
+moment中的语言ignore插件
+cache-loader缓存babel-loader等打包后的文件
+
+## 
+分包split   all  async

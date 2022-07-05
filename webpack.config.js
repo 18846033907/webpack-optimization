@@ -5,6 +5,8 @@
  * 所有构建工具都是基于nodejs平台运行的， 模块化才用commonjs
  * 而我们的代码是放在src，才用的是ES6的模块化
  */
+const RunPlugin=require("./plugins/RunPlugin");
+const DonePlugin=require("./plugins/DonePlugin");
 const { resolve } = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -12,15 +14,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
-// const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-// const notifier = require("node-notifier");
-// const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-// const BundleAnalyzerPlugin =
-//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-// const SpeedMeasureWebpack5Plugin = require("speed-measure-webpack5-plugin");
-// const PurgecssWebpackPlugin = require("purgecss-webpack-plugin");
-// const smw = new SpeedMeasureWebpack5Plugin();
+
 const bootstrap = resolve(
   __dirname,
   "node_modules/bootstrap/dist/css/bootstrap.css"
@@ -89,15 +84,7 @@ const config = {
               "less-loader",
             ],
           },
-          // {
-          //   test: /\.(s[ac]|c)ss$/i, //匹配所有的 sass/scss/css 文件
-          //   use: [
-          //     'style-loader',
-          //     'css-loader',
-          //     'postcss-loader',
-          //     'sass-loader', 
-          //   ]
-          // },
+          
         ],
       },
 
@@ -140,27 +127,8 @@ const config = {
         removeComments: true,
       },
     }),
-    // new FriendlyErrorsWebpackPlugin({
-    //   onErrors: (severity, errors) => {
-    //     let error = errors[0];
-    //     notifier.notify({
-    //       title: "webpack编译失败",
-    //       message: severity + ":" + error.name,
-    //       subtitle: error.file || "",
-    //     });
-    //   },
-    // }),
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: "disabled",
-    //   generateStatsFile: true,
-    // }),
-
-    // new webpack.ProvidePlugin({
-    //   React: "react",
-    // }),
-    // new CopyPlugin({
-    //   patterns: [{ from: "assets", to: "assets" }],
-    // }),
+    new RunPlugin(),
+    new DonePlugin(),
     new MiniCssExtractPlugin({ filename: "[name].css" }),
     new OptimizeCssAssetsWebpackPlugin(), //压缩css
     new CleanWebpackPlugin(),
